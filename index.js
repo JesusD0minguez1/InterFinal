@@ -30,3 +30,67 @@ const urlencodedParser = express.urlencoded({
 });
 
 
+const encrypt = async str => {
+
+    const salt = await bcrypt.genSalt(10);
+    str = await bcrypt.hash(str, salt);
+    return str;
+}
+
+const decrypt = (password, hash) => {
+
+    return bcrypt.compareSync(password, hash);
+}
+
+const checkAuth =  (req, res, next) => {
+
+    if(req.session.user && req.session.user.isAuthenticated) {
+        next();
+    }
+    else {
+        res.redirect('/');
+    }
+}
+
+app.get('/', (req, res) => {
+
+    res.render('index');
+});
+
+app.get("/login", (req, res) => {
+
+    res.render('login');
+});
+
+app.post("/login", urlencodedParser, async (req, res) => {
+
+    const username = req.body.username;
+    const password = req.body.password;
+    
+    await client.connect();
+
+    const user = await collection.findOne({ "username" : username });
+    
+    if(decrypt(password, user.password) && username == user.username) {
+        console.log('login successful');
+        req.session.user = {
+
+            isAuthenticated : true,
+            id: user._id
+        }
+        //console.log('id:', req.session.user._id);
+        
+        res.redirect('/edit/' + user._id);
+    }
+    else {
+        res.redirect('/login')
+    }
+});
+
+
+
+app.get("/register", (req, res) => {
+
+    res.render('register');
+});
+
