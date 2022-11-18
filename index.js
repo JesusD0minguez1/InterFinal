@@ -1,7 +1,7 @@
 const expressSession = require("express-session");
 const pug = require("pug");
 const {MongoClient, ObjectId} = require('mongodb');
-const url = 'mongodb+srv://user_1:Passw0rd1@cluster0.lolsc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+const url = 'mongodb+srv://user:passw0rd123@interwebdev.82cunpv.mongodb.net/test'
 const path = require('path');
 const express = require("express");
 const bcrypt = require("bcryptjs");
@@ -124,8 +124,7 @@ app.post("/postRegister", urlencodedParser, async (req, res) => {
                     "age" : age,
                     "question1" : question1,
                     "question2" : question2,
-                    "question3" : question3,
-                    "question4" : question4
+                    "question3" : question3
                 }    
                 await collection.insertOne(userInfo);
                 client.close();
@@ -149,7 +148,6 @@ app.get('/edit/:id', checkAuth, async (req, res) => {
     console.log('data: ', result);
 
     res.render('edit', {
-
         question: result
     });
 });
@@ -161,8 +159,7 @@ app.post('/edit/:id', urlencodedParser, async (req, res) => {
         {$set: {
             question1: req.body.mult1,
             question2: req.body.mult2,
-            question3: req.body.mult3,
-            question4: req.body.mult4
+            question3: req.body.mult3
         }}
     );
 
