@@ -1,0 +1,52 @@
+doctype 
+html 
+    head 
+        link(rel='stylesheet' href='style.css')
+        title Register
+
+    body
+        div(class='register-box')
+            form(id='form' name='register-form' method='POST' action='http://localhost:3000/postRegister')
+                p Username: 
+                    input(type='text' name='username' placeholder='username')
+                    br
+                p Password: 
+                    input(type='password' name='password' placeholder='password')
+                    br
+                p RePassword: 
+                    input(type='password' name='confirmation' placeholder='reenter password')
+                    br
+                p Email:  
+                    input(type='text' name='email' placeholder='email')
+                    br
+                p Age:
+                    input(type='number' name='age' placeholder='age')
+
+                p 1) What animal does not appear on the Chinese Zodiac?
+                    br
+                    //Bull is correct
+                    select(name='mult1') 
+                        option(value='Dragon') Dragon
+                        option(value='Rabbit') Rabbit 
+                        option(value='Dog') Dog 
+                        option(value='Bull') Bull
+                br
+                p 2) How many hearts does an octopus have?
+                    br
+                    //3 is correct
+                    select(name='mult2')
+                        option(value=1) 1
+                        option(value=2) 2
+                        option(value=3) 3 
+                        option(value=4) 4
+                
+                br
+                p 3) What are the 3 distinct colors of the powerpuff girls?
+                    br
+                    //Blue, Red, Green  is correct
+                    select(name='mult3')
+                        option(value='Green, Purple, Orange') Green, Purple, Orange 
+                        option(value='Red, Purple, Blue') Red, Purple, Blue 
+                        option(value='Blue, Red, Green') Blue, Red, Green 
+                        option(value='Pink, Blue, Green') Pink, Blue, Green 
+                input(type='submit' value='submit')

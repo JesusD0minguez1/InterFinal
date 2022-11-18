@@ -1,0 +1,14 @@
+doctype 
+html 
+    head 
+    h1=title
+    link(rel='stylesheet' href="style.css")
+    body 
+        block content 
+            form(method="post" action='http://localhost:3000/login' name="login")
+                p Username :
+                    input(type="text" name="username")
+                p Password :
+                    input(type="password" name="password")
+                p
+                    input(type="submit" value="Log in")
