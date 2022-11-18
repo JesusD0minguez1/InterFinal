@@ -94,3 +94,91 @@ app.get("/register", (req, res) => {
     res.render('register');
 });
 
+
+app.post("/postRegister", urlencodedParser, async (req, res) => {
+
+    const username = req.body.username;
+    const email = req.body.email;
+    const password = req.body.password;
+    const confirm = req.body.confirmation;
+    const age = req.body.age;
+    const question1 = req.body.mult1;
+    const question2 = req.body.mult2;
+    const question3 = req.body.mult3;
+
+    const emailRegex = /^[a-zA-Z0-9._%+-]{3,}@[a-zA-Z0-9.-]{4,}.[a-zA-Z]{2,}$/;
+    const userRegex = /^[0-9a-zA-Z]+$/;
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[@$!%*?&])(?=.*\d)[A-Za-z\d@$!%*?&]{4,}$/; 
+    
+    if(username != null && password != null && email != null && age != null && confirm != null) {
+        if(password == confirm) {
+            if(userRegex.test(username) && emailRegex.test(email) && passwordRegex.test(password) && !isNaN(age)) {
+
+                await client.connect();
+                const encrypted = await encrypt(password);
+                console.log('password: ', encrypted);
+                let userInfo = {
+                    "username" : username,
+                    "password" : encrypted,
+                    "email" : email,
+                    "age" : age,
+                    "question1" : question1,
+                    "question2" : question2,
+                    "question3" : question3,
+                    "question4" : question4
+                }    
+                await collection.insertOne(userInfo);
+                client.close();
+                res.redirect('/login')
+            }
+        }
+    }
+    else {
+        //send them to an error page
+    }
+});
+
+app.get('/edit/:id', checkAuth, async (req, res) => {
+
+    await client.connect();
+    console.log(req.session.user.id);
+
+    const result = await collection.findOne({ _id: ObjectId(req.session.user.id.trim()) });
+    client.close();
+
+    console.log('data: ', result);
+
+    res.render('edit', {
+
+        question: result
+    });
+});
+
+app.post('/edit/:id', urlencodedParser, async (req, res) => {
+    await client.connect();
+    await collection.updateOne({
+        _id: ObjectId(req.session.user.id)},
+        {$set: {
+            question1: req.body.mult1,
+            question2: req.body.mult2,
+            question3: req.body.mult3,
+            question4: req.body.mult4
+        }}
+    );
+
+    res.redirect('/edit/' + req.session.id);
+});
+
+app.get('/logout', (req, res) => {
+
+    req.session.destroy(err => {
+        if(err) {
+            console.log(err);
+        }
+        else {
+            res.redirect('/login');
+        }
+    });
+});
+
+app.listen(3000);
