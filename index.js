@@ -6,8 +6,8 @@ const path = require('path');
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const cookieParser = require("cookie-parser");
-const session = require("express-session");
 const app = express();
+
 
 const client = new MongoClient(url);
 const db = client.db('users');
@@ -19,7 +19,6 @@ app.set('views', __dirname + "/views");
 app.use(express.static(path.join(__dirname,'/public')));
 app.use(cookieParser());
 app.use(expressSession({
-
     secret: 'wh4t3v3r',
     saveUninitialized:true,
     resave: true
