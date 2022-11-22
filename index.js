@@ -29,8 +29,8 @@ const urlencodedParser = express.urlencoded({
 });
 
 
-const encrypt = async str => {
 
+const encrypt = async str => {
     const salt = await bcrypt.genSalt(10);
     str = await bcrypt.hash(str, salt);
     return str;
@@ -41,6 +41,7 @@ const decrypt = (password, hash) => {
     return bcrypt.compareSync(password, hash);
 }
 
+//Middleware function to check session
 const checkAuth =  (req, res, next) => {
 
     if(req.session.user && req.session.user.isAuthenticated) {
