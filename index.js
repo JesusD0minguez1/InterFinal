@@ -21,7 +21,7 @@ app.use(cookieParser());
 app.use(expressSession({
     secret: 'wh4t3v3r',
     saveUninitialized:true,
-    resave: true
+    resave: false //Changed from true to false keep in mind if it breaks
 }));
 
 const urlencodedParser = express.urlencoded({
