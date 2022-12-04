@@ -2,4 +2,76 @@ doctype
 html 
     head 
         title index 
-        
+        link(rel='stylesheet' href='style.css')
+    body
+        p#cookie
+
+        p#q1
+
+        p#q1ans1
+        p#q1ans2
+        p#q1ans3
+        p#q1ans4
+
+        p#q2
+
+        p#q2ans1
+        p#q2ans2
+        p#q2ans3
+        p#q2ans4
+
+        p#q3
+
+        p#q3ans1
+        p#q3ans2
+        p#q3ans3
+        p#q3ans4
+        script.
+            var json_code = !{JSON.stringify(data)}
+            let data = JSON.parse(json_code);
+
+            const cookie = document.querySelector('#cookie');
+
+            const q1 = document.querySelector('#q1');
+            
+            const q1ans1 = document.querySelector('#q1ans1');
+            const q1ans2 = document.querySelector('#q1ans2');
+            const q1ans3 = document.querySelector('#q1ans3');
+            const q1ans4 = document.querySelector('#q1ans4');
+            
+            const q2 = document.querySelector('#q2');
+            
+            const q2ans1 = document.querySelector('#q2ans1');
+            const q2ans2 = document.querySelector('#q2ans2');
+            const q2ans3 = document.querySelector('#q2ans3');
+            const q2ans4 = document.querySelector('#q2ans4');
+
+            const q3 = document.querySelector('#q3');
+            
+            const q3ans1 = document.querySelector('#q3ans1');
+            const q3ans2 = document.querySelector('#q3ans2');
+            const q3ans3 = document.querySelector('#q3ans3');
+            const q3ans4 = document.querySelector('#q3ans4');
+            
+            cookie.textContent = data.lastvisit;
+            
+            q1.textContent = data.question1.title;
+
+            q1ans1.textContent = data.question1.firstresp;
+            q1ans2.textContent = data.question1.secondresp;
+            q1ans3.textContent = data.question1.thirdresp;
+            q1ans4.textContent = data.question1.fourthresp;
+
+            q2.textContent = data.question2.title;
+
+            q2ans1.textContent = data.question2.firstresp;
+            q2ans2.textContent = data.question2.secondresp;
+            q2ans3.textContent = data.question2.thirdresp;
+            q2ans4.textContent = data.question2.fourthresp;
+
+            q3.textContent = data.question3.title;
+
+            q3ans1.textContent = data.question3.firstresp;
+            q3ans2.textContent = data.question3.secondresp;
+            q3ans3.textContent = data.question3.thirdresp;
+            q3ans4.textContent = data.question3.fourthresp;
